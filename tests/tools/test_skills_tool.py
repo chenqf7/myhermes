@@ -15,6 +15,7 @@ from tools.skills_tool import (
     _get_category_from_path,
     _find_all_skills,
     skill_matches_platform,
+    skill_route,
     skills_list,
     skill_view,
     MAX_DESCRIPTION_LENGTH,
@@ -330,6 +331,76 @@ class TestSkillsList:
         assert result["count"] == 1
         assert result["categories"] == ["linked"]
         assert result["skills"][0]["name"] == "knowledge-brain"
+
+
+# ---------------------------------------------------------------------------
+# skill_route
+# ---------------------------------------------------------------------------
+
+
+class TestSkillRoute:
+    def test_routes_query_using_routing_and_composition_metadata(self, tmp_path):
+        frontmatter = """metadata:
+  hermes:
+    tags: [hermes-agent, skill-system, prompt-assembly]
+    routing:
+      use_when:
+        - User asks how Hermes Agent loads skills, tools, or prompts
+      avoid_when:
+        - User only asks for a plain Python script
+      selection_hint: Use for Hermes Agent internals and skill loading chain work.
+      intents: [debug-loading, contribute-hermes]
+    composition:
+      enhances: [code]
+      after: [using-superpowers]
+"""
+        _make_skill(tmp_path, "hermes-agent", frontmatter_extra=frontmatter)
+        _make_skill(
+            tmp_path,
+            "python-script",
+            frontmatter_extra="""metadata:
+  hermes:
+    tags: [python, scripting]
+    routing:
+      use_when:
+        - User asks for a plain Python script
+""",
+        )
+
+        with patch("tools.skills_tool.SKILLS_DIR", tmp_path):
+            raw = skill_route("modify Hermes skill loading route")
+
+        result = json.loads(raw)
+        assert result["success"] is True
+        assert result["recommendations"][0]["name"] == "hermes-agent"
+        assert result["recommendations"][0]["decision"] == "should_load"
+        assert "selection_hint" in result["recommendations"][0]["matched_fields"]
+        assert result["recommendations"][0]["composition"]["enhances"] == ["code"]
+
+    def test_filters_avoid_matches_by_default(self, tmp_path):
+        _make_skill(
+            tmp_path,
+            "hermes-agent",
+            frontmatter_extra="""metadata:
+  hermes:
+    tags: [hermes-agent]
+    routing:
+      use_when:
+        - User asks about Hermes Agent internals
+      avoid_when:
+        - User only asks for a plain Python script
+""",
+        )
+
+        with patch("tools.skills_tool.SKILLS_DIR", tmp_path):
+            hidden = json.loads(skill_route("write a plain Python script"))
+            visible = json.loads(
+                skill_route("write a plain Python script", include_avoid=True)
+            )
+
+        assert hidden["recommendations"] == []
+        assert visible["recommendations"][0]["name"] == "hermes-agent"
+        assert visible["recommendations"][0]["decision"] == "avoid"
 
 
 # ---------------------------------------------------------------------------

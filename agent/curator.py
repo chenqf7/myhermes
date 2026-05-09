@@ -398,7 +398,7 @@ CURATOR_REVIEW_PROMPT = (
     "and look for the NEXT umbrella opportunity. Don't stop after 3 "
     "merges.\n\n"
     "Your toolset:\n"
-    "  - skills_list, skill_view        — read the current landscape\n"
+    "  - skill_route, skills_list, skill_view — read and rank the current landscape\n"
     "  - skill_manage action=patch      — add sections to the umbrella\n"
     "  - skill_manage action=create     — create a new umbrella SKILL.md\n"
     "  - skill_manage action=write_file — add a references/, templates/, "

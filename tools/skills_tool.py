@@ -51,6 +51,7 @@ SKILL.md Format (YAML Frontmatter, agentskills.io compatible):
 
 Available tools:
 - skills_list: List skills with metadata (progressive disclosure tier 1)
+- skill_route: Recommend relevant skills from lightweight routing metadata
 - skill_view: Load full skill content (progressive disclosure tier 2-3)
 
 Usage:
@@ -626,6 +627,290 @@ def _find_all_skills(*, skip_disabled: bool = False) -> List[Dict[str, Any]]:
 def _sort_skills(skills: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Keep every skill listing path ordered the same way."""
     return sorted(skills, key=lambda s: (s.get("category") or "", s["name"]))
+
+
+def _as_text_list(value: Any) -> List[str]:
+    """Normalize routing/composition metadata values into a flat string list."""
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value.strip()] if value.strip() else []
+    if isinstance(value, (list, tuple, set)):
+        result: List[str] = []
+        for item in value:
+            result.extend(_as_text_list(item))
+        return result
+    if isinstance(value, dict):
+        result: List[str] = []
+        for item in value.values():
+            result.extend(_as_text_list(item))
+        return result
+    text = str(value).strip()
+    return [text] if text else []
+
+
+def _get_hermes_metadata(frontmatter: Dict[str, Any]) -> Dict[str, Any]:
+    metadata = frontmatter.get("metadata")
+    if not isinstance(metadata, dict):
+        return {}
+    hermes_meta = metadata.get("hermes")
+    return hermes_meta if isinstance(hermes_meta, dict) else {}
+
+
+def _tokenize_route_text(text: str) -> Set[str]:
+    normalized = re.sub(r"[^0-9a-zA-Z_\-\u4e00-\u9fff]+", " ", text.lower())
+    tokens = set()
+    for raw in normalized.split():
+        raw = raw.strip("_-")
+        if len(raw) < 2:
+            continue
+        tokens.add(raw)
+        if "-" in raw or "_" in raw:
+            tokens.update(part for part in re.split(r"[-_]+", raw) if len(part) >= 2)
+    return tokens
+
+
+def _score_route_field(
+    query_tokens: Set[str],
+    field_value: Any,
+    *,
+    query_text: str,
+) -> int:
+    score = 0
+    query_lc = query_text.lower()
+    for text in _as_text_list(field_value):
+        text_lc = text.lower()
+        field_tokens = _tokenize_route_text(text_lc)
+        overlap = query_tokens & field_tokens
+        score += len(overlap)
+        if text_lc and text_lc in query_lc:
+            score += 2
+    return score
+
+
+def _compact_composition(composition: Any) -> Dict[str, List[str]]:
+    if not isinstance(composition, dict):
+        return {}
+    result: Dict[str, List[str]] = {}
+    for key in ("requires", "enhances", "before", "after", "conflicts"):
+        values = _as_text_list(composition.get(key))
+        if values:
+            result[key] = values
+    return result
+
+
+def _find_skill_route_entries() -> List[Dict[str, Any]]:
+    """Read route-focused metadata for all visible skills."""
+    from agent.skill_utils import get_external_skills_dirs, iter_skill_index_files
+
+    entries: List[Dict[str, Any]] = []
+    seen_names: set = set()
+    disabled = _get_disabled_skill_names()
+
+    dirs_to_scan = []
+    if SKILLS_DIR.exists():
+        dirs_to_scan.append(SKILLS_DIR)
+    dirs_to_scan.extend(get_external_skills_dirs())
+
+    for scan_dir in dirs_to_scan:
+        for skill_md in iter_skill_index_files(scan_dir, "SKILL.md"):
+            if any(part in _EXCLUDED_SKILL_DIRS for part in skill_md.parts):
+                continue
+
+            skill_dir = skill_md.parent
+            try:
+                content = skill_md.read_text(encoding="utf-8")[:4000]
+                frontmatter, body = _parse_frontmatter(content)
+
+                if not skill_matches_platform(frontmatter):
+                    continue
+
+                name = frontmatter.get("name", skill_dir.name)[:MAX_NAME_LENGTH]
+                if name in seen_names or name in disabled:
+                    continue
+
+                description = frontmatter.get("description", "")
+                if not description:
+                    for line in body.strip().split("\n"):
+                        line = line.strip()
+                        if line and not line.startswith("#"):
+                            description = line
+                            break
+                if len(description) > MAX_DESCRIPTION_LENGTH:
+                    description = description[:MAX_DESCRIPTION_LENGTH - 3] + "..."
+
+                hermes_meta = _get_hermes_metadata(frontmatter)
+                routing = hermes_meta.get("routing")
+                if not isinstance(routing, dict):
+                    routing = {}
+                composition = _compact_composition(hermes_meta.get("composition"))
+
+                entries.append(
+                    {
+                        "name": name,
+                        "description": description,
+                        "category": _get_category_from_path(skill_md),
+                        "tags": _parse_tags(
+                            hermes_meta.get("tags") or frontmatter.get("tags", "")
+                        ),
+                        "related_skills": _parse_tags(
+                            hermes_meta.get("related_skills")
+                            or frontmatter.get("related_skills", "")
+                        ),
+                        "routing": routing,
+                        "composition": composition,
+                    }
+                )
+                seen_names.add(name)
+            except (UnicodeDecodeError, PermissionError) as e:
+                logger.debug("Failed to read skill file %s: %s", skill_md, e)
+            except Exception as e:
+                logger.debug(
+                    "Skipping skill at %s: failed to parse route metadata: %s",
+                    skill_md,
+                    e,
+                    exc_info=True,
+                )
+
+    return entries
+
+
+def skill_route(
+    query: str,
+    context: str = None,
+    limit: int = 5,
+    include_avoid: bool = False,
+    category: str = None,
+) -> str:
+    """
+    Recommend skills for a task without loading full SKILL.md content.
+
+    This is a deterministic, read-only router over skill metadata. It uses the
+    existing description/tags fields plus optional ``metadata.hermes.routing``
+    and ``metadata.hermes.composition`` frontmatter.
+    """
+    try:
+        query = (query or "").strip()
+        context = (context or "").strip()
+        if not query and not context:
+            return tool_error("query or context is required.", success=False)
+
+        route_text = " ".join(part for part in (query, context) if part)
+        query_tokens = _tokenize_route_text(route_text)
+        if not query_tokens:
+            return json.dumps(
+                {
+                    "success": True,
+                    "query": query,
+                    "recommendations": [],
+                    "count": 0,
+                    "hint": "Add more task-specific words to route skills.",
+                },
+                ensure_ascii=False,
+            )
+
+        limit = max(1, min(int(limit or 5), 20))
+        recommendations: List[Dict[str, Any]] = []
+
+        for entry in _find_skill_route_entries():
+            if category and entry.get("category") != category:
+                continue
+
+            routing = entry.get("routing") or {}
+            fields = {
+                "name": entry.get("name"),
+                "description": entry.get("description"),
+                "tags": entry.get("tags"),
+                "related_skills": entry.get("related_skills"),
+                "use_when": routing.get("use_when"),
+                "selection_hint": routing.get("selection_hint"),
+                "intents": routing.get("intents"),
+                "domains": routing.get("domains"),
+                "artifacts": routing.get("artifacts"),
+                "positive_examples": routing.get("positive_examples"),
+            }
+
+            weights = {
+                "name": 6,
+                "description": 3,
+                "tags": 5,
+                "related_skills": 2,
+                "use_when": 4,
+                "selection_hint": 4,
+                "intents": 3,
+                "domains": 3,
+                "artifacts": 3,
+                "positive_examples": 2,
+            }
+
+            score = 0
+            matched_fields: List[str] = []
+            for field_name, value in fields.items():
+                field_score = _score_route_field(
+                    query_tokens,
+                    value,
+                    query_text=route_text,
+                )
+                if field_score:
+                    matched_fields.append(field_name)
+                    score += field_score * weights[field_name]
+
+            avoid_score = _score_route_field(
+                query_tokens,
+                routing.get("avoid_when"),
+                query_text=route_text,
+            ) * 5
+
+            if avoid_score and avoid_score >= score:
+                decision = "avoid"
+            elif score >= 12:
+                decision = "should_load"
+            elif score > 0:
+                decision = "maybe_load"
+            else:
+                continue
+
+            if decision == "avoid" and not include_avoid:
+                continue
+
+            recommendation: Dict[str, Any] = {
+                "name": entry["name"],
+                "decision": decision,
+                "score": score,
+                "avoid_score": avoid_score,
+                "description": entry.get("description", ""),
+                "category": entry.get("category"),
+                "matched_fields": matched_fields,
+                "tags": entry.get("tags", []),
+                "related_skills": entry.get("related_skills", []),
+                "composition": entry.get("composition", {}),
+            }
+            if routing.get("selection_hint"):
+                recommendation["selection_hint"] = routing["selection_hint"]
+            recommendations.append(recommendation)
+
+        recommendations.sort(
+            key=lambda item: (
+                item["decision"] != "should_load",
+                item["decision"] == "avoid",
+                -item["score"],
+                item["name"],
+            )
+        )
+        recommendations = recommendations[:limit]
+
+        return json.dumps(
+            {
+                "success": True,
+                "query": query,
+                "recommendations": recommendations,
+                "count": len(recommendations),
+                "hint": "Call skill_view(name) for any should_load recommendation before acting.",
+            },
+            ensure_ascii=False,
+        )
+    except Exception as e:
+        return tool_error(str(e), success=False)
 
 
 def _load_category_description(category_dir: Path) -> Optional[str]:
@@ -1468,6 +1753,43 @@ SKILLS_LIST_SCHEMA = {
     },
 }
 
+SKILL_ROUTE_SCHEMA = {
+    "name": "skill_route",
+    "description": (
+        "Recommend which skills to load for a task using lightweight metadata "
+        "(description, tags, metadata.hermes.routing, and composition) without "
+        "loading full SKILL.md content. Returns should_load/maybe_load/avoid "
+        "decisions and composition hints. Call skill_view(name) for any "
+        "should_load recommendation before acting."
+    ),
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "The user's task or question to route to relevant skills.",
+            },
+            "context": {
+                "type": "string",
+                "description": "Optional extra context, such as project name, platform, or current plan.",
+            },
+            "limit": {
+                "type": "integer",
+                "description": "Maximum recommendations to return (1-20, default 5).",
+            },
+            "include_avoid": {
+                "type": "boolean",
+                "description": "When true, include skills whose avoid_when metadata matched the query.",
+            },
+            "category": {
+                "type": "string",
+                "description": "Optional category filter to narrow routing results.",
+            },
+        },
+        "required": ["query"],
+    },
+}
+
 SKILL_VIEW_SCHEMA = {
     "name": "skill_view",
     "description": "Skills allow for loading information about specific tasks and workflows, as well as scripts and templates. Load a skill's full content or access its linked files (references, templates, scripts). First call returns SKILL.md content plus a 'linked_files' dict showing available references/templates/scripts. To access those, call again with file_path parameter.",
@@ -1497,6 +1819,21 @@ registry.register(
     check_fn=check_skills_requirements,
     emoji="📚",
 )
+registry.register(
+    name="skill_route",
+    toolset="skills",
+    schema=SKILL_ROUTE_SCHEMA,
+    handler=lambda args, **kw: skill_route(
+        query=args.get("query", ""),
+        context=args.get("context"),
+        limit=args.get("limit", 5),
+        include_avoid=args.get("include_avoid", False),
+        category=args.get("category"),
+    ),
+    check_fn=check_skills_requirements,
+    emoji="📚",
+)
+
 def _skill_view_with_bump(args, **kw):
     """Invoke skill_view, then bump view_count on success. Best-effort: a
     telemetry failure never breaks the tool call."""

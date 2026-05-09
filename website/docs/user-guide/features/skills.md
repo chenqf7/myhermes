@@ -47,6 +47,7 @@ Skills use a token-efficient loading pattern:
 
 ```
 Level 0: skills_list()           → [{name, description, category}, ...]   (~3k tokens)
+Route:  skill_route(query)       → should_load / maybe_load / avoid recommendations
 Level 1: skill_view(name)        → Full content + metadata       (varies)
 Level 2: skill_view(name, path)  → Specific reference file       (varies)
 ```

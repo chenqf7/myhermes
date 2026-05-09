@@ -57,6 +57,21 @@ metadata:
   hermes:
     tags: [Category, Subcategory, Keywords]
     related_skills: [other-skill-name]
+    routing:                           # Optional - used by skill_route(query)
+      use_when:
+        - User asks for this workflow or domain
+      avoid_when:
+        - User asks for a neighboring task this skill should not handle
+      selection_hint: "Short guidance for when to load this skill"
+      intents: [debugging, implementation]
+      domains: [python, cli]
+      artifacts: [patch, runbook]
+    composition:                       # Optional - returned by skill_route and skill_view
+      requires: [setup-skill]
+      enhances: [code-review]
+      before: [deployment]
+      after: [planning]
+      conflicts: [other-skill-name]
     requires_toolsets: [web]            # Optional — only show when these toolsets are active
     requires_tools: [web_search]        # Optional — only show when these tools are available
     fallback_for_toolsets: [browser]    # Optional — hide when these toolsets are active

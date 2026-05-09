@@ -1157,6 +1157,14 @@ def build_skills_system_prompt(
                 else:
                     index_lines.append(f"    - {name}")
 
+        route_guidance = ""
+        if available_tools and "skill_route" in available_tools:
+            route_guidance = (
+                "When several skills might apply or the match is uncertain, use "
+                "skill_route(query) to rank candidates first, then load any "
+                "should_load skill with skill_view(name).\n"
+            )
+
         result = (
             "## Skills (mandatory)\n"
             "Before replying, scan the skills below. If a skill matches or is even partially relevant "
@@ -1169,6 +1177,7 @@ def build_skills_system_prompt(
             "Skills also encode the user's preferred approach, conventions, and quality standards "
             "for tasks like code review, planning, and testing — load them even for tasks you "
             "already know how to do, because the skill defines how it should be done here.\n"
+            + route_guidance +
             "Whenever the user asks you to configure, set up, install, enable, disable, modify, "
             "or troubleshoot Hermes Agent itself — its CLI, config, models, providers, tools, "
             "skills, voice, gateway, plugins, or any feature — load the `hermes-agent` skill "
