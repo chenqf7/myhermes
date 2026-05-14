@@ -62,14 +62,19 @@ This file records the stable local memory and operating workflow needed to redep
 3. Restore or recreate configuration under the target Hermes home. Do **not** commit secrets; provide API keys and platform credentials through the server's private config/environment.
 4. Configure the desired model/provider and toolsets.
 5. Configure Feishu/Lark gateway credentials on the server if the new deployment should receive Feishu messages.
-6. Start the gateway under a durable supervisor for the target OS:
+6. Restore non-secret local state if desired:
+   - Cron definitions: `docs/revival/cron-jobs.json` and human-readable `docs/revival/cron-jobs.md`.
+   - Paper-trading state snapshot: `docs/revival/stock_ai_system/`.
+   - Copy the snapshot into the new Hermes home as `stock_ai_system/` before recreating the market cron jobs if continuing the same experiment.
+7. Start the gateway under a durable supervisor for the target OS:
    - macOS: prefer LaunchAgent or a `caffeinate -dimsu`-protected long-running process.
    - Linux server: prefer systemd/user service or another supervisor that survives SSH logout.
-7. Verify with:
+8. Verify with:
    - `hermes doctor` or the equivalent project command.
    - `hermes status` / gateway status.
+   - `hermes cron list` after recreating cron jobs.
    - A test Feishu DM round trip if Feishu is enabled.
-8. After startup, check logs for provider, tool, memory, and gateway errors.
+9. After startup, check logs for provider, tool, memory, and gateway errors.
 
 ## Safety boundaries
 

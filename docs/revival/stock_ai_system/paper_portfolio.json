@@ -1,0 +1,651 @@
+{
+  "version": 1,
+  "currency": "CNY",
+  "capital_cny": 40000,
+  "mode": "paper_trading_only",
+  "profit_streak_days": 0,
+  "target_profit_streak_days": 5,
+  "days": [
+    {
+      "date": "2026-05-13",
+      "session": "first_intraday_round",
+      "created_at_bj": "2026-05-13T23:15:27.398838+08:00",
+      "status": "validated_loss_by_risk_rule",
+      "capital_cny": 40000,
+      "data_sources": [
+        "Stooq delayed/near-real-time quote snapshot",
+        "Yahoo chart endpoint for recent daily closes",
+        "public news/search fallback; xurl not configured"
+      ],
+      "market_focus": "US equities primary; Hong Kong secondary via ADR/proxy when US session is active",
+      "recommendations": [
+        {
+          "ticker": "NVDA",
+          "market": "US",
+          "direction": "buy_on_strength_or_hold",
+          "confidence": 0.78,
+          "weight_pct": 0.18,
+          "amount_cny": 7200,
+          "reference_price_usd": 226.4,
+          "trigger": "\u82e5\u76d8\u4e2d\u7ef4\u6301\u5728 224 \u4e0a\u65b9\u4e14\u534a\u5bfc\u4f53/\u7eb3\u6307\u4e0d\u660e\u663e\u8f6c\u5f31\uff0c\u53ef\u6a21\u62df\u4e70\u5165/\u6301\u6709\uff1b\u8dcc\u7834\u5219\u4e0d\u8ffd\u3002",
+          "stop_loss": "\u8dcc\u7834 219 \u6216\u65e5\u5185\u8dcc\u5e45\u6269\u5927\u4e14 AI \u534a\u5bfc\u4f53\u540c\u6b65\u8d70\u5f31\u65f6\u6b62\u635f/\u53d6\u6d88\u3002",
+          "target": "231-235 \u533a\u95f4\u5148\u9a8c\u8bc1\u52a8\u91cf\u3002",
+          "rationale": "AI \u7b97\u529b\u4e3b\u7ebf\u6838\u5fc3\u6807\u7684\uff0c\u4eca\u65e5\u76f8\u5bf9\u5f3a\u4e8e AMD/PLTR\uff0c\u9002\u5408\u4f5c\u4e3a\u4e2d\u6027\u4ed3\u4f4d\u6838\u5fc3\u3002"
+        },
+        {
+          "ticker": "GOOGL",
+          "market": "US",
+          "direction": "buy_on_pullback_or_hold",
+          "confidence": 0.74,
+          "weight_pct": 0.14,
+          "amount_cny": 5600,
+          "reference_price_usd": 396.72,
+          "trigger": "\u82e5\u56de\u8e29 392-394 \u4e0d\u7834\u4e14\u5927\u76d8\u7a33\u5b9a\uff0c\u6a21\u62df\u4f4e\u5438\uff1b\u82e5\u5df2\u62c9\u9ad8\u4e0d\u8ffd\u3002",
+          "stop_loss": "\u8dcc\u7834 386 \u6216 AI/\u5e7f\u544a/\u4e91\u76f8\u5173\u6d88\u606f\u8f6c\u5f31\u3002",
+          "target": "405 \u9644\u8fd1\u3002",
+          "rationale": "\u5927\u76d8\u79d1\u6280\u91cc\u4eca\u65e5\u5f3a\u52bf\uff0cAI/\u4e91\u53d9\u4e8b\u4e0e\u76f8\u5bf9\u4f4e\u6ce2\u52a8\u5339\u914d\u4e2d\u6027\u98ce\u9669\u3002"
+        },
+        {
+          "ticker": "TSLA",
+          "market": "US",
+          "direction": "small_tactical_buy_only",
+          "confidence": 0.66,
+          "weight_pct": 0.08,
+          "amount_cny": 3200,
+          "reference_price_usd": 448.07,
+          "trigger": "\u53ea\u5728\u7a81\u7834\u5e76\u7ad9\u7a33 448-450 \u540e\u5c0f\u4ed3\u4f4d\u6a21\u62df\uff1b\u5426\u5219\u89c2\u671b\u3002",
+          "stop_loss": "\u8dcc\u56de 435 \u4e0b\u65b9\u3002",
+          "target": "460-468\u3002",
+          "rationale": "\u5f39\u6027\u9ad8\u4f46\u566a\u58f0\u5927\uff0c\u53ea\u7ed9\u6218\u672f\u5c0f\u4ed3\u4f4d\u3002"
+        },
+        {
+          "ticker": "BABA",
+          "market": "US/HK proxy",
+          "direction": "buy_on_strength_or_hold",
+          "confidence": 0.7,
+          "weight_pct": 0.1,
+          "amount_cny": 4000,
+          "reference_price_usd": 143.44,
+          "trigger": "\u82e5 ADR \u5f3a\u52bf\u5ef6\u7eed\u4e14\u6e2f\u80a1\u4e92\u8054\u7f51\u60c5\u7eea\u540c\u6b65\uff0c\u6a21\u62df\u4e70\u5165/\u6301\u6709\uff1b\u4e0d\u8ffd\u9ad8\u8d85\u8fc7\u5f53\u65e5\u9ad8\u70b9\u592a\u591a\u3002",
+          "stop_loss": "\u8dcc\u7834 136\u3002",
+          "target": "148-152\u3002",
+          "rationale": "\u6e2f\u80a1/\u4e2d\u6982 AI \u4e0e\u4e92\u8054\u7f51\u5f39\u6027\u4ee3\u8868\uff0c\u7528 ADR \u4f5c\u4e3a\u7f8e\u80a1\u65f6\u6bb5\u9a8c\u8bc1\u3002"
+        },
+        {
+          "ticker": "PLTR",
+          "market": "US",
+          "direction": "watchlist_no_buy_until_reclaim",
+          "confidence": 0.6,
+          "weight_pct": 0.0,
+          "amount_cny": 0,
+          "reference_price_usd": 130.07,
+          "trigger": "\u53ea\u6709\u91cd\u65b0\u7ad9\u56de 133-136 \u4e14\u91cf\u80fd\u6539\u5584\u624d\u8003\u8651\uff1b\u5f53\u524d\u4e0d\u4e70\u3002",
+          "stop_loss": "\u4e0d\u9002\u7528\uff1b\u82e5\u5df2\u6301\u6709\uff0c\u8dcc\u7834 129 \u51cf\u4ed3\u3002",
+          "target": "\u89c2\u5bdf 136\u3002",
+          "rationale": "AI \u70ed\u95e8\u80a1\u4f46\u4eca\u65e5\u76f8\u5bf9\u5f31\uff0c\u5148\u4f5c\u4e3a\u98ce\u9669\u6e29\u5ea6\u8ba1\u3002"
+        }
+      ],
+      "portfolio_exposure_pct": 0.5,
+      "risk_note": "\u4e2d\u6027\u98ce\u9669\uff1a\u9996\u8f6e\u53ea\u4f7f\u7528\u7ea6 50% \u4ed3\u4f4d\uff0c\u5269\u4f59\u73b0\u91d1\u7b49\u5f85\u9a8c\u8bc1\uff1b\u6240\u6709\u5efa\u8bae\u4ec5\u6a21\u62df\u76d8\u3002",
+      "validated": true,
+      "intraday_events": [
+        {
+          "created_at_bj": "2026-05-14T00:02:24.116674+08:00",
+          "ticker": "GOOGL",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u8dcc\u7834 386",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "17:47:18",
+            "Open": 385.595,
+            "High": 398.59,
+            "Low": 385.01,
+            "Close": 398.43,
+            "Volume": 8077324.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff0c\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T00:02:24.116674+08:00",
+          "ticker": "TSLA",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u8dcc\u56de 435 \u4e0b\u65b9",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "TSLA.US",
+            "Date": "2026-05-13",
+            "Time": "17:47:20",
+            "Open": 436.665,
+            "High": 453.4,
+            "Low": 430.21,
+            "Close": 451.11,
+            "Volume": 28548480.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff0c\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T00:02:24.116674+08:00",
+          "ticker": "BABA",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u8dcc\u7834 136",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "BABA.US",
+            "Date": "2026-05-13",
+            "Time": "17:47:21",
+            "Open": 132.06,
+            "High": 146.0,
+            "Low": 130.33,
+            "Close": 144.905,
+            "Volume": 16463900.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff0c\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:15:57.881382+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u8ddd\u79bb 405 \u76ee\u6807\u4ef7\u7ea6 0.91%\uff0c\u8fdb\u5165\u6b62\u76c8\u89c2\u5bdf\u533a",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "19:00:19",
+            "Open": 385.595,
+            "High": 401.38,
+            "Low": 385.01,
+            "Close": 401.33,
+            "Volume": 10380869.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff0c\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:15:57.881382+08:00",
+          "ticker": "BABA",
+          "event_type": "daily_move_gt5pct",
+          "level": "\u8f83\u524d\u6536\u76d8 134.78 \u4e0a\u6da8\u7ea6 8.13%\uff0c\u5355\u6807\u7684\u65e5\u5185\u6da8\u5e45\u8d85\u8fc7 5%\uff0c\u540c\u65f6\u63a5\u8fd1 148-152 \u6b62\u76c8\u533a",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check",
+          "quote": {
+            "Symbol": "BABA.US",
+            "Date": "2026-05-13",
+            "Time": "19:00:22",
+            "Open": 132.06,
+            "High": 146.0,
+            "Low": 130.33,
+            "Close": 145.74,
+            "Volume": 18976596.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u8be5\u4e8b\u4ef6\u4ec5\u7528\u4e8e\u6a21\u62df\u76d8\u7ec4\u5408\u98ce\u9669\u76d1\u63a7\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:46:36.660820+08:00",
+          "ticker": "GOOGL",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u6700\u4f4e 385.01 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 386",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check where available",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "19:31:37",
+            "Open": 385.595,
+            "High": 402.25,
+            "Low": 385.01,
+            "Close": 401.6,
+            "Volume": 11465095.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:46:36.660820+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 401.60 \u8ddd\u76ee\u6807 405 \u7ea6 0.84%",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check where available",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "19:31:37",
+            "Open": 385.595,
+            "High": 402.25,
+            "Low": 385.01,
+            "Close": 401.6,
+            "Volume": 11465095.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:46:36.660820+08:00",
+          "ticker": "TSLA",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u6700\u4f4e 430.21 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 435",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check where available",
+          "quote": {
+            "Symbol": "TSLA.US",
+            "Date": "2026-05-13",
+            "Time": "19:31:40",
+            "Open": 436.665,
+            "High": 453.4,
+            "Low": 430.21,
+            "Close": 448.585,
+            "Volume": 38763569.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:46:36.660820+08:00",
+          "ticker": "BABA",
+          "event_type": "stop_loss",
+          "level": "\u76d8\u4e2d\u6700\u4f4e 130.33 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 136",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check where available",
+          "quote": {
+            "Symbol": "BABA.US",
+            "Date": "2026-05-13",
+            "Time": "19:31:43",
+            "Open": 132.06,
+            "High": 146.1537,
+            "Low": 130.33,
+            "Close": 145.55,
+            "Volume": 19963389.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T01:46:36.660820+08:00",
+          "ticker": "BABA",
+          "event_type": "daily_move_gt5pct",
+          "level": "\u73b0\u4ef7 145.55 \u8f83\u524d\u6536\u76d8 134.78 \u53d8\u52a8 +7.99%\uff0c\u8d85\u8fc7 5%",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; Yahoo daily close cross-check where available",
+          "quote": {
+            "Symbol": "BABA.US",
+            "Date": "2026-05-13",
+            "Time": "19:31:43",
+            "Open": 132.06,
+            "High": 146.1537,
+            "Low": 130.33,
+            "Close": 145.55,
+            "Volume": 19963389.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T02:16:38.588455+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 401.94 \u8ddd\u76ee\u6807 405 \u7ea6 0.76%\uff0c\u4ecd\u5728\u6b62\u76c8\u89c2\u5bdf\u533a",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "20:01:10",
+            "Open": 385.595,
+            "High": 402.5,
+            "Low": 385.01,
+            "Close": 401.935,
+            "Volume": 12270986.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T02:31:35.448467+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 402.97 \u8ddd\u76ee\u6807 405 \u7ea6 0.50%\uff0c\u6b62\u76c8\u89c2\u5bdf\u533a\u8fdb\u4e00\u6b65\u6536\u7a84",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "20:16:14",
+            "Open": 385.595,
+            "High": 403.3,
+            "Low": 385.01,
+            "Close": 402.965,
+            "Volume": 12795097.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T02:46:43+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 403.40 \u8ddd\u76ee\u6807 405 \u7ea6 0.40%\uff0c\u6b62\u76c8\u89c2\u5bdf\u533a\u7ee7\u7eed\u6536\u7a84\uff0c\u9700\u5173\u6ce8\u662f\u5426\u89e6\u53d1 405 \u9644\u8fd1\u6b62\u76c8\u9a8c\u8bc1",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "20:31:31",
+            "Open": 385.595,
+            "High": 403.6,
+            "Low": 385.01,
+            "Close": 403.395,
+            "Volume": 13256329.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T03:00:53+08:00",
+          "ticker": "BABA",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 146.54 \u8ddd 148-152 \u76ee\u6807\u533a\u95f4\u4e0b\u6cbf\u7ea6 0.99%\uff0c\u8fdb\u5165\u6b62\u76c8\u89c2\u5bdf\u533a\uff1b\u8f83\u524d\u6536\u76d8 134.78 \u4ecd\u4e0a\u6da8\u7ea6 8.73%",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot; previous close from prior Yahoo/Stooq cross-check record",
+          "quote": {
+            "Symbol": "BABA.US",
+            "Date": "2026-05-13",
+            "Time": "20:45:50",
+            "Open": 132.06,
+            "High": 146.77,
+            "Low": 130.33,
+            "Close": 146.54,
+            "Volume": 21668471.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        },
+        {
+          "created_at_bj": "2026-05-14T04:01:46+08:00",
+          "ticker": "GOOGL",
+          "event_type": "near_target",
+          "level": "\u73b0\u4ef7 403.11 \u8ddd\u76ee\u6807 405 \u7ea6 0.47%\uff0c\u4ecd\u5904\u6b62\u76c8\u89c2\u5bdf\u533a\uff08\u4e0d\u8db3 1%\uff09",
+          "action": "paper_alert_only_no_real_trade",
+          "quote_source": "Stooq delayed/near-real-time quote snapshot",
+          "quote": {
+            "Symbol": "GOOGL.US",
+            "Date": "2026-05-13",
+            "Time": "21:46:44",
+            "Open": 385.595,
+            "High": 403.7,
+            "Low": 385.01,
+            "Close": 403.11,
+            "Volume": 15528841.0
+          },
+          "note": "\u516c\u5f00\u884c\u60c5\u53ef\u80fd\u5ef6\u8fdf\uff1b\u4ec5\u6a21\u62df\u76d8\u98ce\u63a7\u8bb0\u5f55\uff0c\u4e0d\u6784\u6210\u6295\u8d44\u5efa\u8bae\u3002"
+        }
+      ],
+      "validation": {
+        "validated_at_bj": "2026-05-14T06:00:00+08:00",
+        "quote_source": "Stooq quote CSV, delayed public data; fetched after US close. Times shown in Stooq feed.",
+        "validation_method": "\u6b62\u635f/\u76ee\u6807\u7528\u65e5 OHLC \u5224\u5b9a\uff1b\u56e0\u65e0\u9010\u7b14\u65f6\u95f4\u5e8f\u5217\uff0c\u82e5\u540c\u65e5\u540c\u65f6\u63a5\u8fd1\u89e6\u53d1\u6761\u4ef6\uff0c\u4fdd\u5b88\u6309\u98ce\u63a7\u4f18\u5148\u3002",
+        "results": [
+          {
+            "ticker": "NVDA",
+            "market": "US",
+            "amount_cny": 7200,
+            "reference_price_usd": 226.4,
+            "ohlc": {
+              "date": "2026-05-13",
+              "time": "22:00:19",
+              "open": 224.93,
+              "high": 227.84,
+              "low": 221.5653,
+              "close": 225.83,
+              "volume": 148834838,
+              "stop": 219,
+              "target_low": 231
+            },
+            "close_mark_return_pct": -0.2518,
+            "close_mark_pnl_cny": -18.13,
+            "max_adverse_excursion_pct": -2.1355,
+            "max_favorable_excursion_pct": 0.636,
+            "stop_hit": false,
+            "target_hit": false,
+            "validation_outcome": "close_mark",
+            "risk_rule_exit_price_usd": 225.83,
+            "risk_rule_return_pct": -0.2518,
+            "risk_rule_pnl_cny": -18.13,
+            "error_or_note": "\u672a\u89e6\u53d1\u6b62\u635f/\u76ee\u6807\uff0c\u6309\u6536\u76d8\u4ef7\u76ef\u5e02\u3002"
+          },
+          {
+            "ticker": "GOOGL",
+            "market": "US",
+            "amount_cny": 5600,
+            "reference_price_usd": 396.72,
+            "ohlc": {
+              "date": "2026-05-13",
+              "time": "22:00:19",
+              "open": 385.595,
+              "high": 403.7,
+              "low": 385.01,
+              "close": 402.64,
+              "volume": 28054446,
+              "stop": 386,
+              "target_low": 405
+            },
+            "close_mark_return_pct": 1.4922,
+            "close_mark_pnl_cny": 83.57,
+            "max_adverse_excursion_pct": -2.9517,
+            "max_favorable_excursion_pct": 1.7594,
+            "stop_hit": true,
+            "target_hit": false,
+            "validation_outcome": "stop_loss_triggered",
+            "risk_rule_exit_price_usd": 386,
+            "risk_rule_return_pct": -2.7022,
+            "risk_rule_pnl_cny": -151.32,
+            "error_or_note": "\u65e5\u5185\u4f4e\u70b9 385.01 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 386\uff1bOHLC \u65e0\u6cd5\u786e\u8ba4\u5148\u540e\u987a\u5e8f\uff0c\u6309\u98ce\u63a7\u4f18\u5148\u4fdd\u5b88\u8ba1\u6b62\u635f\u3002"
+          },
+          {
+            "ticker": "TSLA",
+            "market": "US",
+            "amount_cny": 3200,
+            "reference_price_usd": 448.07,
+            "ohlc": {
+              "date": "2026-05-13",
+              "time": "22:00:18",
+              "open": 436.665,
+              "high": 453.39,
+              "low": 430.21,
+              "close": 445.13,
+              "volume": 67878775,
+              "stop": 435,
+              "target_low": 460
+            },
+            "close_mark_return_pct": -0.6561,
+            "close_mark_pnl_cny": -21.0,
+            "max_adverse_excursion_pct": -3.986,
+            "max_favorable_excursion_pct": 1.1873,
+            "stop_hit": true,
+            "target_hit": false,
+            "validation_outcome": "stop_loss_triggered",
+            "risk_rule_exit_price_usd": 435,
+            "risk_rule_return_pct": -2.917,
+            "risk_rule_pnl_cny": -93.34,
+            "error_or_note": "\u65e5\u5185\u4f4e\u70b9 430.21 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 435\uff1bOHLC \u65e0\u6cd5\u786e\u8ba4\u5148\u540e\u987a\u5e8f\uff0c\u6309\u98ce\u63a7\u4f18\u5148\u4fdd\u5b88\u8ba1\u6b62\u635f\u3002"
+          },
+          {
+            "ticker": "BABA",
+            "market": "US/HK proxy",
+            "amount_cny": 4000,
+            "reference_price_usd": 143.44,
+            "ohlc": {
+              "date": "2026-05-13",
+              "time": "22:00:21",
+              "open": 132.06,
+              "high": 146.87,
+              "low": 130.33,
+              "close": 145.81,
+              "volume": 40031179,
+              "stop": 136,
+              "target_low": 148
+            },
+            "close_mark_return_pct": 1.6523,
+            "close_mark_pnl_cny": 66.09,
+            "max_adverse_excursion_pct": -9.1397,
+            "max_favorable_excursion_pct": 2.3912,
+            "stop_hit": true,
+            "target_hit": false,
+            "validation_outcome": "stop_loss_triggered",
+            "risk_rule_exit_price_usd": 136,
+            "risk_rule_return_pct": -5.1868,
+            "risk_rule_pnl_cny": -207.47,
+            "error_or_note": "\u65e5\u5185\u4f4e\u70b9 130.33 \u89e6\u53ca/\u8dcc\u7834\u6b62\u635f 136\uff1bOHLC \u65e0\u6cd5\u786e\u8ba4\u5148\u540e\u987a\u5e8f\uff0c\u6309\u98ce\u63a7\u4f18\u5148\u4fdd\u5b88\u8ba1\u6b62\u635f\u3002"
+          }
+        ],
+        "close_mark_portfolio_pnl_cny": 110.53,
+        "close_mark_portfolio_return_pct": 0.2763,
+        "risk_rule_portfolio_pnl_cny": -470.26,
+        "risk_rule_portfolio_return_pct": -1.1757,
+        "hit_rate_risk_rule_pct": 0.0,
+        "max_adverse_excursion_pct": -9.1397,
+        "profit_day": false,
+        "error_attribution": [
+          "\u65e9\u76d8/\u76d8\u4e2d\u5efa\u8bae\u628a BABA\u3001GOOGL \u7684\u5f3a\u52bf\u89c6\u4e3a\u53ef\u5ef6\u7eed\uff0c\u4f46\u4e8c\u8005\u65e5\u5185\u4f4e\u70b9\u5148/\u66fe\u89e6\u53ca\u6b62\u635f\u533a\uff0c\u8bf4\u660e\u5165\u573a\u6761\u4ef6\u5bf9\u5f00\u76d8\u8df3\u7a7a\u548c\u76d8\u4e2d\u5bbd\u5e45\u9707\u8361\u8fc7\u6ee4\u4e0d\u8db3\u3002",
+          "TSLA \u53ea\u8981\u6c42\u7a81\u7834 448-450\uff0c\u5c0f\u4ed3\u4f4d\u6b63\u786e\uff0c\u4f46\u672a\u8981\u6c42\u7a81\u7834\u524d\u4f4e\u70b9/\u6b62\u635f\u65e0\u6548\u5316\uff0c\u5bfc\u81f4 OHLC \u4fdd\u5b88\u9a8c\u8bc1\u4e3a\u6b62\u635f\u3002",
+          "NVDA \u672a\u89e6\u53d1\u6b62\u635f\u4f46\u52a8\u91cf\u4e0d\u8db3\uff0c\u53c2\u8003\u4ef7\u504f\u9ad8\uff0c\u76ee\u6807\u533a\u95f4\u8fc7\u8fd1\u4e14\u7f3a\u5c11\u6307\u6570\u786e\u8ba4\u3002",
+          "X/Twitter\uff1axurl/API \u672a\u914d\u7f6e\uff0cdexeteryy \u4fe1\u53f7\u672c\u8f6e\u672a\u80fd\u76f4\u63a5\u9a8c\u8bc1\uff0c\u53ef\u4fe1\u5ea6\u4fdd\u6301\u4e2d\u6027\u504f\u4f4e\uff0c\u4e0d\u80fd\u52a0\u6743\u3002"
+        ]
+      },
+      "validated_at_bj": "2026-05-14T06:00:00+08:00"
+    },
+    {
+      "date": "2026-05-14",
+      "session": "pre_market_daily",
+      "created_at_bj": "2026-05-14T08:00:42+08:00",
+      "status": "pending_close_validation",
+      "capital_cny": 40000,
+      "data_sources": [
+        "xurl not installed/configured; did not read ~/.xurl; used public Stooq and Google News RSS fallback",
+        "Stooq delayed OHLC snapshot for 2026-05-13 US/HK closes",
+        "Google News RSS queries for AI stocks and China AI/HK stocks"
+      ],
+      "market_background": {
+        "us_last_session": "SPY 742.31; QQQ 714.48; risk-on but AI dispersion: GOOGL/META/BABA strong, NVDA flat, AMD volatile, PLTR/SMCI weak.",
+        "rates_vol": "Yahoo quote endpoint rate-limited; VIX/10Y/DXY not refreshed, so macro confidence capped.",
+        "x_twitter": "xurl unavailable; dexeteryy direct tweets not captured; X weight capped at 0-3 percent."
+      },
+      "recommendations": [
+        {
+          "ticker": "MSFT",
+          "market": "US",
+          "direction": "buy_on_pullback_or_hold",
+          "confidence": 0.7,
+          "weight_pct": 0.12,
+          "amount_cny": 4800,
+          "reference_price_usd": 405.21,
+          "trigger": "Enter/hold only if price stabilizes in 402-405 zone and QQQ does not break prior-day low; do not chase above 410 gap-up.",
+          "stop_loss": "Below 398 or cloud/AI mega-cap basket weakens.",
+          "target": "412-418; downgrade if close below 405.",
+          "close_validation": "Close above 405, relative performance vs QQQ, intraday low above 398.",
+          "rationale": "Lower-volatility AI/cloud core after prior risk-rule loss."
+        },
+        {
+          "ticker": "META",
+          "market": "US",
+          "direction": "buy_on_strength_small",
+          "confidence": 0.68,
+          "weight_pct": 0.1,
+          "amount_cny": 4000,
+          "reference_price_usd": 616.54,
+          "trigger": "Small paper buy only if still above 610 after open and Nasdaq/ad tech stable; no trade if open loses 606.",
+          "stop_loss": "Below 600; failed breakout if rally fades below 610.",
+          "target": "630-640.",
+          "close_validation": "Close above 610 and higher-high/higher-low continuation.",
+          "rationale": "Relative strength in mega-cap tech; AI recommendation/ad efficiency narrative."
+        },
+        {
+          "ticker": "AMD",
+          "market": "US",
+          "direction": "watch_or_tiny_buy_after_retest",
+          "confidence": 0.62,
+          "weight_pct": 0.05,
+          "amount_cny": 2000,
+          "reference_price_usd": 445.5,
+          "trigger": "Only after retest 440-445 then reclaim 450 with data-center news/momentum support; otherwise watch.",
+          "stop_loss": "Below 432 or inability to reclaim 450.",
+          "target": "465-475.",
+          "close_validation": "Close above 450, narrower intraday range, relative strength vs NVDA.",
+          "rationale": "AMD news heat from data-center guidance, but prior session volatility requires 5 percent max."
+        },
+        {
+          "ticker": "NVDA",
+          "market": "US",
+          "direction": "hold_watch_no_new_chase",
+          "confidence": 0.64,
+          "weight_pct": 0.08,
+          "amount_cny": 3200,
+          "reference_price_usd": 225.83,
+          "trigger": "If already paper-held, observe above 224; new add only on reclaim/hold above 228 with QQQ/semi strength.",
+          "stop_loss": "Below 221; cancel add if AMD keeps outperforming and NVDA cannot break 228.",
+          "target": "231-235.",
+          "close_validation": "Close above 228 and relative strength vs AMD/semis.",
+          "rationale": "AI core but prior day momentum was insufficient and news suggests rotation toward AMD/Intel."
+        },
+        {
+          "ticker": "BABA / 9988.HK",
+          "market": "US ADR / HK proxy",
+          "direction": "reduce_or_watch",
+          "confidence": 0.58,
+          "weight_pct": 0.0,
+          "amount_cny": 0,
+          "reference_price_usd": 145.81,
+          "trigger": "No new exposure; if already paper-held, reduce into 148-152; watch below 140.",
+          "stop_loss": "No new buy stop; re-entry only after intraday range compresses and HK confirms.",
+          "target": "148-152 as reduce/watch zone.",
+          "close_validation": "ADR above 144 and 9988.HK volume without reversal.",
+          "rationale": "China AI/HK sentiment positive, but previous OHLC risk rule failed."
+        }
+      ],
+      "portfolio_exposure_pct": 0.35,
+      "risk_note": "After prior risk-rule loss, total exposure cut to 35 percent; no gap-up chasing; all paper/research only.",
+      "sources": [
+        {
+          "title": "Stooq quote CSV snapshots",
+          "url": "https://stooq.com/q/l/"
+        },
+        {
+          "title": "Google News RSS AI stocks query",
+          "url": "https://news.google.com/rss/search?q=AI%20stocks%20NVDA%20AMD%20datacenter%20semiconductors%20earnings%20guidance%20past%2024%20hours"
+        },
+        {
+          "title": "Google News RSS China AI HK query",
+          "url": "https://news.google.com/rss/search?q=China%20AI%20Hong%20Kong%20stocks%20Alibaba%20Tencent%20semiconductors"
+        }
+      ],
+      "validated": false,
+      "asia_close_validation": {
+        "validated_at_bj": "2026-05-14T16:30:00+08:00",
+        "scope": "HK/Asia session only; US recommendations remain pending US close validation",
+        "quote_source": "Yahoo Finance chart endpoint for 9988.HK daily OHLC; Stooq cross-check was stale at 2026-05-13 for 9988.HK",
+        "results": [
+          {
+            "ticker": "9988.HK",
+            "linked_recommendation": "BABA / 9988.HK",
+            "market": "HK",
+            "amount_cny": 0,
+            "reference_note": "Recommendation was reduce_or_watch / no new exposure; PnL not booked because suggested weight was 0 percent.",
+            "ohlc_hkd": {
+              "date": "2026-05-14",
+              "open": 143.1,
+              "high": 144.0,
+              "low": 137.4,
+              "close": 137.9,
+              "volume": 171292901,
+              "previous_close": 132.8
+            },
+            "close_change_pct_vs_prior_hk_close": 3.8404,
+            "intraday_return_open_to_close_pct": -3.6338,
+            "paper_pnl_cny": 0.0,
+            "signal_outcome": "valid_risk_avoidance",
+            "signal_note": "No new exposure was recommended; 148-152 reduce/watch zone was not reached; close below 140 watch threshold after a gap-up fade validated the cautious signal."
+          }
+        ],
+        "asia_session_portfolio_pnl_cny": 0.0,
+        "valid_signals": 1,
+        "invalid_signals": 0
+      },
+      "asia_session_validated": true
+    }
+  ]
+}
